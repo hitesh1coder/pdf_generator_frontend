@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 
 import { useState } from "react";
-export default function Register() {
+export default function Login() {
   const [inputs, setInputs] = useState({
-    fullName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -17,24 +15,10 @@ export default function Register() {
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto h-screen">
       <div className="w-full md:w-4/12 p-6 rounded-lg shadow-lg bg-gray-100 ">
         <h1 className="text-3xl font-semibold text-center text-gray-800">
-          Sign Up <span className="text-blue-500">GetPDF</span>
+          Log In <span className="text-blue-500">GetPDF</span>
         </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-          <div>
-            <label className="font-semibold">Full Name</label>
-            <input
-              required
-              type="text"
-              placeholder="Enter Your Name"
-              className="w-full p-1 focus:outline-blue-400 rounded-md outline-none"
-              value={inputs.fullName}
-              onChange={(e) =>
-                setInputs({ ...inputs, fullName: e.target.value })
-              }
-            />
-          </div>
-
           <div>
             <label className=" font-semibold">Email</label>
             <input
@@ -62,25 +46,11 @@ export default function Register() {
             />
           </div>
 
-          <div>
-            <label className="font-semibold">Confirm Password</label>
-            <input
-              required
-              type="password"
-              placeholder="Confirm Password"
-              className="w-full p-1 focus:outline-blue-400 rounded-md outline-non"
-              value={inputs.confirmPassword}
-              onChange={(e) =>
-                setInputs({ ...inputs, confirmPassword: e.target.value })
-              }
-            />
-          </div>
-
           <Link
-            to={"/login"}
+            to={"/"}
             className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
           >
-            Already have an account?
+            Don't have an Account!!
           </Link>
 
           <div>
@@ -91,7 +61,7 @@ export default function Register() {
               {loading ? (
                 <span className="loading loading-spinner"></span>
               ) : (
-                "Sign Up"
+                "LogIn"
               )}
             </button>
           </div>
