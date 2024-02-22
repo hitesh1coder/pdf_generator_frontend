@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
-
 import { useState } from "react";
+
 export default function Register() {
-  const [inputs, setInputs] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [fullName, setFullName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };
@@ -28,10 +27,8 @@ export default function Register() {
               type="text"
               placeholder="Enter Your Name"
               className="w-full p-1 focus:outline-blue-400 rounded-md outline-none"
-              value={inputs.fullName}
-              onChange={(e) =>
-                setInputs({ ...inputs, fullName: e.target.value })
-              }
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
           </div>
 
@@ -43,8 +40,8 @@ export default function Register() {
               pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/"
               placeholder="Enter Your Email"
               className="w-full p-1 focus:outline-blue-400 rounded-md outline-non"
-              value={inputs.email}
-              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -55,10 +52,8 @@ export default function Register() {
               type="password"
               placeholder="Enter Password"
               className="w-full p-1 focus:outline-blue-400 rounded-md outline-non"
-              value={inputs.password}
-              onChange={(e) =>
-                setInputs({ ...inputs, password: e.target.value })
-              }
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -69,10 +64,8 @@ export default function Register() {
               type="password"
               placeholder="Confirm Password"
               className="w-full p-1 focus:outline-blue-400 rounded-md outline-non"
-              value={inputs.confirmPassword}
-              onChange={(e) =>
-                setInputs({ ...inputs, confirmPassword: e.target.value })
-              }
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
 

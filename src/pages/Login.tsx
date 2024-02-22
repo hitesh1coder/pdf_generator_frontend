@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 
 import { useState } from "react";
 export default function Login() {
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };
@@ -27,8 +26,8 @@ export default function Login() {
               pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/"
               placeholder="Enter Your Email"
               className="w-full p-1 focus:outline-blue-400 rounded-md outline-non"
-              value={inputs.email}
-              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -39,10 +38,8 @@ export default function Login() {
               type="password"
               placeholder="Enter Password"
               className="w-full p-1 focus:outline-blue-400 rounded-md outline-non"
-              value={inputs.password}
-              onChange={(e) =>
-                setInputs({ ...inputs, password: e.target.value })
-              }
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
