@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
-
 import { useState } from "react";
+import useLogin from "../hooks/useLogin";
+
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+
+  const { login, loading } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await login({ email, password });
   };
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto h-screen">

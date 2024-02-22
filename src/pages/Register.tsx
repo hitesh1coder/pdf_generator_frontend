@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import useSignup from "../hooks/useSignUp";
 
 export default function Register() {
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const { signup, loading } = useSignup();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await signup({
+      fullName,
+      email,
+      password,
+      confirmPassword,
+    });
   };
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto h-screen">
