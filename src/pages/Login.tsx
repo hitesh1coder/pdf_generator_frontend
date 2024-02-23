@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import useLogin from "../hooks/useLogin";
+import { AppDispatch, RootState } from "../redux/store";
+import { loginUser } from "../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { login, loading } = useLogin();
+  const { loading } = useSelector((state: RootState) => state.rootReducer.user);
+
+  const dispatch: AppDispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login({ email, password });
+    dispatch(loginUser({ email, password }));
   };
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto h-screen">
@@ -46,7 +50,7 @@ export default function Login() {
           </div>
 
           <Link
-            to={"/"}
+            to={"/register"}
             className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
           >
             Don't have an Account!!

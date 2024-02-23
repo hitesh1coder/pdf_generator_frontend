@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import useSignup from "../hooks/useSignUp";
+
+import { AppDispatch, RootState } from "../redux/store";
+import { signupUser } from "../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Register() {
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const { signup, loading } = useSignup();
+
+  const dispatch: AppDispatch = useDispatch();
+  const { loading } = useSelector((state: RootState) => state.rootReducer.user);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signup({
-      fullName,
-      email,
-      password,
-      confirmPassword,
-    });
+    dispatch(signupUser({ fullName, email, password, confirmPassword }));
   };
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto h-screen">

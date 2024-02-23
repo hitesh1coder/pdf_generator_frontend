@@ -5,25 +5,28 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AddProduct from "./pages/AddProduct";
-import { useAuthContext } from "./context/AuthContext";
+
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store.tsx";
 
 function App() {
-  const { authUser } = useAuthContext();
+  const { user } = useSelector((state: RootState) => state.rootReducer.user);
+
   return (
     <BrowserRouter>
       <ToastContainer position="top-center" />
       <Routes>
         <Route
           path="/register"
-          element={authUser ? <Navigate to={"/"} /> : <Register />}
+          element={user ? <Navigate to={"/"} /> : <Register />}
         />
         <Route
           path="/login"
-          element={authUser ? <Navigate to={"/"} /> : <Login />}
+          element={user ? <Navigate to={"/"} /> : <Login />}
         />
         <Route
           path="/"
-          element={authUser ? <AddProduct /> : <Navigate to={"/login"} />}
+          element={user ? <AddProduct /> : <Navigate to={"/login"} />}
         />
       </Routes>
     </BrowserRouter>
