@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 interface AuthUser {
@@ -11,6 +12,7 @@ const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { setAuthUser } = useAuthContext();
 
+  const navigate = useNavigate();
   const login = async ({ email, password }: AuthUser) => {
     const success = handleInputErrors({
       email,
@@ -19,34 +21,36 @@ const useLogin = () => {
     if (!success) return;
 
     setLoading(true);
-    console.log(email, password);
-    setLoading(false);
-    // try {
-    //   const res = await fetch("/api/auth/login", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //
-    //       email,
-    //       password,
-    //           //     }),
-    //   });
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
-    //   const data = await res.json();
-    //   if (data.error) {
-    //     throw new Error(data.error);
-    //   }
-    //   localStorage.setItem("chat-user", JSON.stringify(data));
-    //   setAuthUser(data);
-    // } catch (error) {
-    //   if (error instanceof Error && error.message) {
-    //     toast.error(error.message);
-    //   } else {
-    //     toast.error("An error occurred");
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
+      const data = await res.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      localStorage.setItem("pdf-user", JSON.stringify(data));
+      setAuthUser(data);
+      toast.success("User Logged In successfully");
+      navigate("/");
+    } catch (error) {
+      if (error instanceof Error && error.message) {
+        toast.error(error.message);
+      } else {
+        toast.error("An error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return { loading, login };

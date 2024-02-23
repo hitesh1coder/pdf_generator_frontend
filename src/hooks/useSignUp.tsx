@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 interface AuthUser {
@@ -12,6 +13,8 @@ interface AuthUser {
 const useSignup = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { setAuthUser } = useAuthContext();
+
+  const navigate = useNavigate();
 
   const signup = async ({
     fullName,
@@ -28,36 +31,40 @@ const useSignup = () => {
     if (!success) return;
 
     setLoading(true);
-    console.log(fullName, email, password, confirmPassword);
-    setLoading(false);
-    // try {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName,
+            email,
+            password,
+            confirmPassword,
+          }),
+        }
+      );
 
-    //   const res = await fetch("/api/auth/signup", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       fullName,
-    //       email,
-    //       password,
-    //       confirmPassword,
-    //     }),
-    //   });
+      const data = await res.json();
 
-    //   const data = await res.json();
-    //   if (data.error) {
-    //     throw new Error(data.error);
-    //   }
-    //   localStorage.setItem("chat-user", JSON.stringify(data));
-    //   setAuthUser(data);
-    // } catch (error) {
-    //   if (error instanceof Error && error.message) {
-    //     toast.error(error.message);
-    //   } else {
-    //     toast.error("An error occurred");
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      localStorage.setItem("pdf-user", JSON.stringify(data));
+      setAuthUser(data);
+      toast.success("User Registered Successfully");
+      navigate("/login");
+    } catch (error) {
+      if (error instanceof Error && error.message) {
+        toast.error(error.message);
+      } else {
+        toast.error("An error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return { loading, signup };
@@ -76,7 +83,7 @@ function handleInputErrors({
   }
 
   if (password !== confirmPassword) {
-    toast.error("Passwords do not match");
+    toast.error("Passwords does not not match");
     return false;
   }
 

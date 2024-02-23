@@ -57,11 +57,7 @@ export default function Login() {
               className="bg-blue-500 rounded-xl py-2 px-4 border-none outline-none text-white cursor-pointer"
               disabled={loading}
             >
-              {loading ? (
-                <span className="loading loading-spinner"></span>
-              ) : (
-                "LogIn"
-              )}
+              {loading ? "Processing" : "LogIn"}
             </button>
           </div>
         </form>

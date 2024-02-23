@@ -1,6 +1,9 @@
 import ProductInput from "../components/ProductInput";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function AddProduct() {
+  const { authUser } = useAuthContext();
+  console.log(authUser);
   return (
     <div className="w-screen h-screen flex flex-col items-center p-10 gap-4">
       <h1 className="text-3xl font-semibold text-center text-gray-800">
