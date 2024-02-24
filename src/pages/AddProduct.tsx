@@ -1,26 +1,33 @@
 import { useState } from "react";
 import ProductInput from "../components/ProductInput";
 import ProductLists from "../components/ProductLists";
+import {
+  addProduct,
+  removeProduct,
+  calculateGrandTotal,
+} from "../redux/slices/productSlice";
 
-interface Product {
-  name: string;
-  quantity: number;
-  rate: number;
-}
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../redux/store";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState<string>("");
   const [productQty, setProductQty] = useState<number>(0);
   const [productRate, setProductRate] = useState<number>(0);
-  const [productList, setProductList] = useState<Product[]>([]);
+
+  const { products } = useSelector(
+    (state: RootState) => state.rootReducer.products
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddproduct = (e: React.FormEvent) => {
     e.preventDefault();
     if (productName.trim().length > 0 && productQty > 0 && productRate > 0) {
-      setProductList([
-        ...productList,
-        { name: productName, quantity: productQty, rate: productRate },
-      ]);
+      dispatch(addProduct({ productName, productQty, productRate }));
+      dispatch(calculateGrandTotal());
       setProductName("");
       setProductQty(0);
       setProductRate(0);
@@ -29,7 +36,7 @@ export default function AddProduct() {
 
   const handleSaveProduct = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(productList);
+    navigate("/showproduct");
   };
   return (
     <div className="w-screen h-screen flex flex-col items-center p-10 gap-4">
@@ -48,7 +55,7 @@ export default function AddProduct() {
           />
         </form>
 
-        <ProductLists products={productList} />
+        <ProductLists />
         <div>
           <button
             onClick={handleAddproduct}
@@ -56,7 +63,7 @@ export default function AddProduct() {
           >
             Add New Product
           </button>
-          {productList.length > 0 && (
+          {products.length > 0 && (
             <button
               onClick={handleSaveProduct}
               type="submit"

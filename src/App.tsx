@@ -8,6 +8,7 @@ import AddProduct from "./pages/AddProduct";
 
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store.tsx";
+import ShowProducts from "./pages/ShowProducts.tsx";
 
 function App() {
   const { user } = useSelector((state: RootState) => state.rootReducer.user);
@@ -27,6 +28,10 @@ function App() {
         <Route
           path="/"
           element={user ? <AddProduct /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/showproduct"
+          element={user ? <ShowProducts /> : <Navigate to={"/login"} />}
         />
       </Routes>
     </BrowserRouter>

@@ -1,18 +1,15 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./slices/userSlice";
+import { productReducer } from "./slices/productSlice";
 
-// Combine reducers if you have multiple slices
-// import { combineReducers } from 'redux';
-
-// Combine reducers if needed
 const rootReducer = combineReducers({
   user: userReducer,
+  products: productReducer,
 });
 
-// Create the Redux store
 export const store = configureStore({
   reducer: {
-    rootReducer, // Root reducer
+    rootReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

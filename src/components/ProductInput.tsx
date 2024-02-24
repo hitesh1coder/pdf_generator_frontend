@@ -26,6 +26,7 @@ const ProductInput: React.FC<ProductInputProps> = ({
           placeholder="Product Name"
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
+          required
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -37,6 +38,7 @@ const ProductInput: React.FC<ProductInputProps> = ({
           placeholder="Product Quantity"
           value={productQty}
           onChange={(e) => setProductQty(Number(e.target.value))}
+          required
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -48,6 +50,7 @@ const ProductInput: React.FC<ProductInputProps> = ({
           placeholder="Product Rate"
           value={productRate}
           onChange={(e) => setProductRate(Number(e.target.value))}
+          required
         />
       </div>
     </div>

@@ -1,32 +1,42 @@
-interface Product {
-  name: string;
-  quantity: number;
-  rate: number;
-}
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../redux/store";
 
-interface ProductListsProps {
-  products: Product[];
-}
+const ProductLists = () => {
+  const { products } = useSelector(
+    (state: RootState) => state.rootReducer.products
+  );
 
-const ProductLists: React.FC<ProductListsProps> = ({ products }) => {
+  const calculateTotal = (qty: number, rate: number) => {
+    let sum = 0;
+    if (!isNaN(Number(qty)) && !isNaN(Number(rate))) {
+      sum = Number(qty) * Number(rate);
+    }
+    return sum;
+  };
   return (
-    <div className="w-full border-t-2 border-gray-300 dark:border-gray-700 my-4">
+    <div className="w-full my-4">
       <div className="flex flex-col w-full gap-5 text-center">
         <table>
           <tbody>
-            <tr>
-              <th>No.</th>
-              <th>Product Name</th>
-              <th>Quantity</th>
+            <tr className="border-b-2 border-gray-200 p-2 items-center flex justify-between">
+              <th>Product</th>
+              <th>Qty</th>
               <th>Rate</th>
+              <th>Total</th>
             </tr>
 
             {products?.map((product, index) => (
-              <tr className="border-b-2 border-gray-200 p-2" key={index}>
-                <td>{index + 1}</td>
-                <td>{product.name}</td>
-                <td>{product.quantity}</td>
-                <td>{product.rate}</td>
+              <tr
+                className="border-b-2 border-gray-200 p-2 flex items-center justify-between"
+                key={index}
+              >
+                <td>{product.productName}</td>
+                <td>{product.productQty}</td>
+                <td>{product.productRate}</td>
+                <td>
+                  INR
+                  {calculateTotal(product.productQty, product.productRate)}
+                </td>
               </tr>
             ))}
           </tbody>
