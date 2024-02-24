@@ -43,7 +43,7 @@ export const signupUser = createAsyncThunk(
       const result = await response.data;
       return result;
     } catch (error: any) {
-      return rejectWithValue((error as AxiosError)?.response?.data?.error);
+      return rejectWithValue(error.response?.data?.error);
     }
   }
 );
@@ -64,8 +64,7 @@ export const loginUser = createAsyncThunk(
 
       return res;
     } catch (error: any) {
-      // Use AxiosError to provide type information about the error object
-      return rejectWithValue((error as AxiosError)?.response?.data?.error);
+      return rejectWithValue(error?.response?.data?.error);
     }
   }
 );
