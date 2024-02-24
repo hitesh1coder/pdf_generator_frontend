@@ -12,6 +12,9 @@ import ShowProducts from "./pages/ShowProducts.tsx";
 
 function App() {
   const { user } = useSelector((state: RootState) => state.rootReducer.user);
+  const { products } = useSelector(
+    (state: RootState) => state.rootReducer.products
+  );
 
   return (
     <BrowserRouter>
@@ -31,7 +34,9 @@ function App() {
         />
         <Route
           path="/showproduct"
-          element={user ? <ShowProducts /> : <Navigate to={"/login"} />}
+          element={
+            products.length > 0 ? <ShowProducts /> : <Navigate to={"/"} />
+          }
         />
       </Routes>
     </BrowserRouter>

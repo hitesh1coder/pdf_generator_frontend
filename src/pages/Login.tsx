@@ -18,7 +18,7 @@ export default function Login() {
   };
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto h-screen">
-      <div className="w-full md:w-4/12 p-6 rounded-lg shadow-lg bg-gray-100 ">
+      <div className="w-[80%] md:w-[50%] p-2 md:p-6 rounded-lg shadow-lg bg-gray-100 ">
         <h1 className="text-3xl font-semibold text-center text-gray-800">
           Log In <span className="text-blue-500">GetPDF</span>
         </h1>

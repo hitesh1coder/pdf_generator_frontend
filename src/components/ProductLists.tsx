@@ -1,10 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
+import deleteIcon from "../assets/icons8-delete-30.png";
+import { removeProduct } from "../redux/slices/productSlice";
 
 const ProductLists = () => {
   const { products } = useSelector(
     (state: RootState) => state.rootReducer.products
   );
+  const dispatch = useDispatch();
 
   const calculateTotal = (qty: number, rate: number) => {
     let sum = 0;
@@ -12,6 +15,9 @@ const ProductLists = () => {
       sum = Number(qty) * Number(rate);
     }
     return sum;
+  };
+  const handleRemoveProduct = (prdt: string) => {
+    dispatch(removeProduct(prdt));
   };
   return (
     <div className="w-full my-4">
@@ -36,6 +42,14 @@ const ProductLists = () => {
                 <td>
                   INR
                   {calculateTotal(product.productQty, product.productRate)}
+                </td>
+                <td>
+                  <img
+                    onClick={() => handleRemoveProduct(product.productName)}
+                    className="w-4 h-4 cursor-pointer"
+                    src={deleteIcon}
+                    alt=""
+                  />
                 </td>
               </tr>
             ))}

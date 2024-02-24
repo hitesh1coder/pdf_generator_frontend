@@ -16,8 +16,8 @@ const ProductInput: React.FC<ProductInputProps> = ({
   setProductRate,
 }) => {
   return (
-    <div className="flex justify-around">
-      <div className="flex flex-col gap-1">
+    <div className="md:flex text-left justify-around">
+      <div className="flex flex-col md:gap-1 gap-2">
         <label htmlFor="product_name">Product Name :</label>
         <input
           className="py-1 px-2 border-none outline-none focus:outline-blue-400 rounded-md"
@@ -29,7 +29,7 @@ const ProductInput: React.FC<ProductInputProps> = ({
           required
         />
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col md:gap-1 gap-2">
         <label htmlFor="product_qty">Product Quantity : </label>
         <input
           className="py-1 px-2 border-none outline-none focus:outline-blue-400 rounded-md"
@@ -41,7 +41,7 @@ const ProductInput: React.FC<ProductInputProps> = ({
           required
         />
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col md:gap-1 gap-2">
         <label htmlFor="product_rate">Product Rate : </label>
         <input
           className="py-1 px-2 border-none outline-none focus:outline-blue-400 rounded-md"

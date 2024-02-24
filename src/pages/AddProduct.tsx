@@ -3,12 +3,12 @@ import ProductInput from "../components/ProductInput";
 import ProductLists from "../components/ProductLists";
 import {
   addProduct,
-  removeProduct,
   calculateGrandTotal,
+  saveProducts,
 } from "../redux/slices/productSlice";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
@@ -16,11 +16,14 @@ export default function AddProduct() {
   const [productQty, setProductQty] = useState<number>(0);
   const [productRate, setProductRate] = useState<number>(0);
 
-  const { products } = useSelector(
+  const { products, error } = useSelector(
     (state: RootState) => state.rootReducer.products
   );
+  const { user } = useSelector((state: RootState) => state.rootReducer.user);
 
-  const dispatch = useDispatch();
+  let fullName = user?.fullName!;
+
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleAddproduct = (e: React.FormEvent) => {
@@ -36,10 +39,18 @@ export default function AddProduct() {
 
   const handleSaveProduct = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/showproduct");
+    // Save the Product to database
+    if (products.length === 0) return;
+    else {
+      dispatch(saveProducts({ products, fullName }));
+      console.log(error);
+      if (error == false) {
+        navigate("/showproduct");
+      }
+    }
   };
   return (
-    <div className="w-screen h-screen flex flex-col items-center p-10 gap-4">
+    <div className="w-screen h-screen flex flex-col items-center p-2 md:p-10 gap-4">
       <h1 className="text-3xl font-semibold text-center text-gray-800">
         Add Your <span className="text-blue-500">Products</span>
       </h1>
@@ -69,7 +80,7 @@ export default function AddProduct() {
               type="submit"
               className="bg-blue-500 rounded-xl py-2 px-4 m-3 border-none outline-none text-white cursor-pointer"
             >
-              Submit
+              Generate Invoice
             </button>
           )}
         </div>
